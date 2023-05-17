@@ -1,1 +1,128 @@
+//1.LED灯点亮，闪烁
+#include <REGX52.H>
 
+void Delay(xms)		//@11.0592MHz    //isp生成的延时代码
+{
+	unsigned char i, j;
+
+	while(xms--)
+	{
+		
+		i = 2;
+		j = 199;
+		do
+		{
+			while (--j);
+		} while (--i);
+	}
+}
+
+void main()
+{
+     while(1)
+		 {
+				P2_7=0;   //可以查电路原理图
+				Delay(500);
+				P2_7=1;     //P2_7为led区第8个灯
+				Delay(500); //延时500ms
+		 }
+}
+
+//2.led流水灯
+#include <REGX52.H>
+
+void Delay(unsigned int xms)		//@11.0592MHz
+{
+	unsigned char i, j;
+	while(xms--)
+	{
+		i = 2;
+		j = 199;
+		do
+		{
+			while (--j);
+		} while (--i);
+	}
+}
+
+void main()
+{
+		while(1)
+		{
+			P2_0=0;      //此为从左右到右流水灯。 第一种方式 采用REGX52头文件中便捷方式
+			Delay(250);
+			P2_0=1;
+			Delay(250);
+			P2_1=0;
+			Delay(250);
+			P2_1=1;
+			Delay(250);
+			P2_2=0;
+			Delay(250);
+			P2_2=1;
+			Delay(250);
+			P2_3=0;
+			Delay(250);
+			P2_3=1;
+			Delay(250);
+			P2_4=0;
+			Delay(250);
+			P2_4=1;
+			Delay(250);
+			P2_5=0;
+			Delay(250);
+			P2_5=1;
+			Delay(250);
+			P2_6=0;
+			Delay(250);
+			P2_6=1;
+			Delay(250);
+			P2_7=0;
+			Delay(250);
+			P2_7=1;
+			Delay(250);
+		}
+}
+
+//3.LED流水灯 
+#include <REGX52.H>
+
+void Delay(unsigned int xms)		//@11.0592MHz   //第二种方式，采用P2端口的8位各自赋值 （16进制）
+{                                              //P2端口为led区
+while(xms--)
+{
+	unsigned char i, j;
+
+
+	i = 2;
+	j = 199;
+	do
+	{
+		while (--j);
+	} while (--i);
+	}
+}
+
+
+void main()
+{
+		while(1)
+		{
+			P2=0x7F;//0111 1111
+			Delay(500);
+			P2=0xBF;//1011 1111
+			Delay(500);
+			P2=0xDF;//1101 1111
+			Delay(500);
+			P2=0xEF;//1110 1111
+			Delay(500);
+			P2=0xF7;//1111 0111
+			Delay(500);
+			P2=0xFB;//1111 1011
+			Delay(500);
+			P2=0xFD;//1111 1101
+			Delay(500);
+			P2=0xFE;//1111 1110
+			Delay(500);
+		}
+}
