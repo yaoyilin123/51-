@@ -1,0 +1,62 @@
+#include <REGX52.H>
+
+void delay(unsigned int xms)		//@11.0592MHz
+{
+	while(xms--)
+	{
+			unsigned char i, j;
+
+		i = 2;
+		j = 199;
+		do
+		{
+			while (--j);
+		} while (--i);
+	}
+}
+ 
+void main()
+{
+	unsigned char num=0;
+	P2=0xFE;//1111 1110       
+	while (1)
+		{
+			if(P3_0==0)          //按下以后需要变成 1111 1101——> 1111 1011 ——> 1111 0111
+			{
+				delay(20);
+				while(P3_0==0);
+				delay(20);
+			
+				num++;
+				if(num>7)
+					num=0;
+				P2=~(0x01<<num);
+			}
+			if(P3_1==0)
+			{
+				delay(20);
+				while(P3_1==0);
+				delay(20);
+				
+		/*		if(num==0)        //较麻烦
+				{
+					P2=0x7F; //0111 1111   
+					num =7;
+				}
+				else
+				{
+					num--;
+					P2=~(0x01<<num);
+				}
+		*/
+				if (num==0)       //简洁
+					num=7;
+				else
+					num--;
+				P2=~(0x01<<num);    //均是由 0000 0001 移动num位所得，所以主要步骤在于修改num
+			}
+		}
+}
+
+
+
